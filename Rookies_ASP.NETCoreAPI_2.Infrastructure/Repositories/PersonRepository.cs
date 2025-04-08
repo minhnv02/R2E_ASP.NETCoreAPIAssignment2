@@ -43,9 +43,9 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
             return 500;
         }
 
-        public IEnumerable<Person> GetPeople(RepoFilterPersonDto filterPersonDto)
+        public List<Person> GetPeople(RepoFilterPersonDto filterPersonDto)
         {
-            IEnumerable<Person> resultPeople = _people;
+            List<Person> resultPeople = _people;
 
             if (filterPersonDto == null)
                 return resultPeople;
@@ -53,21 +53,25 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
             if (!string.IsNullOrEmpty(filterPersonDto.FirstName))
                 resultPeople = resultPeople
                     .Where(person => person.FirstName != null &&
-                                     person.FirstName.ToLower().Contains(filterPersonDto.FirstName.ToLower()));
+                                     person.FirstName.ToLower().Contains(filterPersonDto.FirstName.ToLower()))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(filterPersonDto.LastName))
                 resultPeople = resultPeople
                     .Where(person => person.LastName != null &&
-                                     person.LastName.ToLower().Contains(filterPersonDto.LastName.ToLower()));
+                                     person.LastName.ToLower().Contains(filterPersonDto.LastName.ToLower()))
+                    .ToList();
 
             if (!string.IsNullOrEmpty(filterPersonDto.BirthPlace))
                 resultPeople = resultPeople
                     .Where(person => person.BirthPlace != null &&
-                                     person.BirthPlace.ToLower().Contains(filterPersonDto.BirthPlace.ToLower()));
+                                     person.BirthPlace.ToLower().Contains(filterPersonDto.BirthPlace.ToLower()))
+                    .ToList();
 
             if (filterPersonDto.Gender != null)
                 resultPeople = resultPeople
-                    .Where(person => person.Gender == filterPersonDto.Gender);
+                    .Where(person => person.Gender == filterPersonDto.Gender)
+                    .ToList();
 
             return resultPeople;
         }
@@ -102,7 +106,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
                 return new List<Person>();
             }
         }
-        private void SavePeopleToCsv(IEnumerable<Person> peopleToSave)
+        private void SavePeopleToCsv(List<Person> peopleToSave)
         {
             try
             {

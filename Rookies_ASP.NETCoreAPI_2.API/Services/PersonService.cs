@@ -30,11 +30,11 @@ namespace Rookies_ASP.NETCoreAPI_2.API.Services
             return _personRepository.Delete(id);
         }
 
-        public IEnumerable<ResponsePersonDto> GetPeople(ApiFilterPersonDto apiFilterPersonDto)
+        public List<ResponsePersonDto> GetPeople(ApiFilterPersonDto apiFilterPersonDto)
         {
             var repoFilterPersonDto = _mapper.Map<RepoFilterPersonDto>(apiFilterPersonDto);
             var people = _personRepository.GetPeople(repoFilterPersonDto);
-            var peopleDtos = _mapper.Map<IEnumerable<ResponsePersonDto>>(people);
+            var peopleDtos = _mapper.Map<List<ResponsePersonDto>>(people);
             return peopleDtos;
         }
 
