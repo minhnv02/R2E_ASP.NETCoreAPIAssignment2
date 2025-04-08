@@ -11,7 +11,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
         private static List<Person> _people = new List<Person>();
         public PersonRepository()
         {
-            _people = InitialData().ToList();
+            _people = InitialData();
         }
         public int Add(Person person)
         {
@@ -23,7 +23,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
                 SavePeopleToCsv(_people);
                 return ConstantsStatus.Success;
             }
-            return ConstantsStatus.Failed;
+            return 500;
         }
 
         public int Delete(Guid id)
@@ -40,7 +40,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
                 }
                 return ConstantsStatus.Failed;
             }
-            return ConstantsStatus.Failed;
+            return 500;
         }
 
         public IEnumerable<Person> GetPeople(RepoFilterPersonDto filterPersonDto)
@@ -77,7 +77,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
             var updatePerson = _people.FirstOrDefault(person => person.Id == id);
             if (updatePerson == null)
             {
-                return ConstantsStatus.Failed;
+                return 500;
             }          
             updatePerson.BirthPlace = person.BirthPlace;
             updatePerson.FirstName = person.FirstName;
@@ -87,7 +87,7 @@ namespace Rookies_ASP.NETCoreAPI_2.Infrastructure.Repositories
             SavePeopleToCsv(_people);
             return ConstantsStatus.Success;
         }
-        private IEnumerable<Person> InitialData()
+        private List<Person> InitialData()
         {
             try
             {
